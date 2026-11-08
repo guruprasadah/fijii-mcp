@@ -78,22 +78,30 @@ restarting the server.
 }
 ```
 
-**OpenCode** (`opencode.json`):
+**OpenCode** (`opencode.jsonc` in the project, or global `~/.config/opencode/opencode.jsonc`):
 
-```json
+```jsonc
 {
+  "$schema": "https://opencode.ai/config.json",
   "mcp": {
-    "fijii": {
-      "type": "local",
-      "command": ["node", "/absolute/path/to/fijii-mcp/dist/index.js"],
-      "environment": {
-        "DIGII_TOKEN": "eyJhbGciOi...",
-        "DIGII_BASE_URL": "https://your-institute.digiicampus.com"
+    "servers": {
+      "fijii": {
+        "type": "local",
+        "command": ["node", "/absolute/path/to/fijii-mcp/dist/index.js"],
+        "environment": {
+          "DIGII_TOKEN": "{env:DIGII_TOKEN}",
+          "DIGII_BASE_URL": "{env:DIGII_BASE_URL}"
+        }
       }
     }
   }
 }
 ```
+
+Using `{env:DIGII_TOKEN}` keeps the secret out of the file; export it in the shell that launches OpenCode
+(or substitute the literal value). Because the token is re-read on every request, updating the exported
+variable's source and restarting OpenCode picks up a rotated token. Verify with `opencode mcp list`
+(expect `✓ fijii  connected`).
 
 ## Testing
 

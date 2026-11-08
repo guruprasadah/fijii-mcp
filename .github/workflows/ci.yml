@@ -20,11 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Build vendored SDK
-        run: npm ci && npm run build
-        working-directory: vendor/fijii
-
-      - name: Install
+      - name: Install (builds vendor/fijii via postinstall)
         run: npm ci
 
       - name: Typecheck

@@ -30,18 +30,18 @@ refresh `DIGII_TOKEN`"), never a crash.
 
 ## Setup
 
-The SDK is vendored as a git submodule and must be built once:
+The SDK is vendored as a git submodule and is built automatically on install:
 
 ```bash
 git clone --recurse-submodules <this-repo> fijii-mcp
 cd fijii-mcp
-npm install
-npm run build --prefix vendor/fijii   # produces vendor/fijii/dist
-npm install                           # links the vendored SDK
+npm install      # postinstall builds vendor/fijii, then links it
 npm run build
 ```
 
-If you already cloned without submodules: `git submodule update --init --recursive`.
+If you already cloned without submodules: `git submodule update --init --recursive`, then `npm install`.
+(The `postinstall` step skips quietly if the submodule is absent, and rebuilds only when
+`vendor/fijii/dist` is missing.)
 
 ### Credentials
 
